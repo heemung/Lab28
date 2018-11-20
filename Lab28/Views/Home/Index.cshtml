@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@if (ViewBag.CardBag != null)
+{
+
+    foreach (var card in ViewBag.CardBag)
+    {
+        <h2>@card.value OF @card.suit</h2>
+
+        <img src="@card.image">
+
+    }
+}
+
+<form action="/Home/MakeDeck" method="post">
+    <input type="submit" value="Get Deck" />
+</form>
+
+@if (ViewBag.DeckID != null)
+{
+    <form action="/Home/DrawCards" method="post">
+        <input type="submit" value="Draw Cards." />
+        <input type="hidden" name="deckID" value="@ViewBag.DeckID" />
+
+    </form>
+}
+else if (Request.Cookies["deckID"] != null)
+{
+    <form action="/Home/DrawCards" method="post">
+        <input type="submit" value="Draw Cards." />
+        <input type="hidden" name="deckID" value="@Request.Cookies["deckID"].Value" />
+
+    </form>
+}
